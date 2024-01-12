@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <math.h>
+
+void read2DArray(int rows, int cols, int array[rows][cols]) {
+    printf("Enter elements of the 2D array:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &array[i][j]);
+        }
+    }
+}
+
+void findMaxAndStdDev(int rows, int cols, int array[rows][cols], int *maxValue, float *stdDev) {
+    *maxValue = array[0][0];
+    float sum = 0;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (array[i][j] > *maxValue) {
+                *maxValue = array[i][j];
+            }
+            sum += array[i][j];
+        }
+    }
+
+    float mean = sum / (rows * cols);
+    sum = 0;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            sum += pow(array[i][j] - mean, 2);
+        }
+    }
+
+    *stdDev = sqrt(sum / (rows * cols));
+}
+
+void printTranspose(int rows, int cols, int array[rows][cols]) {
+    printf("Transpose of the matrix:\n");
+    for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < rows; i++) {
+            printf("%d ", array[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int rows = 3;
+    int cols = 4;
+    int matrix[rows][cols];
+    int maxValue;
+    float stdDev;
+
+    read2DArray(rows, cols, matrix);
+    findMaxAndStdDev(rows, cols, matrix, &maxValue, &stdDev);
+    printTranspose(rows, cols, matrix);
+
+    printf("Maximum Value: %d\n", maxValue);
+    printf("Standard Deviation: %f\n", stdDev);
+
+    return 0;
+}
